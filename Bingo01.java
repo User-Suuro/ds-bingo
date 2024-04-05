@@ -17,10 +17,9 @@ public class Bingo01 {
         Player computer01 =  new Player("Computer 1", playerCard, false);
         Player computer02 =  new Player("Computer 1", playerCard, false);
         Player computer03 =  new Player("Computer 1", playerCard, false);
-        Player computer04 =  new Player("Computer 1", playerCard, false);
 
         // STORE INSTANCES OF PLAYER TO ARRAY
-        Player[] activePlayers = {player01, computer01, computer02, computer03, computer04}; 
+        Player[] activePlayers = {player01, computer01, computer02, computer03}; 
 
         // NOTE SA 2
         // Bali mangyayari d2 need natin sya gawan ng pang sort kung sino ung mga nanalo and natalo
@@ -29,7 +28,7 @@ public class Bingo01 {
         // Bali kung sino ung natira sa array un ang idedeclare natin kung sino ung nanalo
 
         // THEN GAWA RIN KAYA METHOD PANG DISPLAY, BTW MAY UTILS SA BABA PDE MO UN MAGAMIT DITO :3. EXAMPLE: Utils.clrsr()
-        
+
     }
 
    
