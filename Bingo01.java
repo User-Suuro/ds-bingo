@@ -1,87 +1,129 @@
+import java.util.Random;
+import java.util.Scanner;
+
 public class Bingo01 {
+    static Random rand = new Random();
+    static Scanner scan = new Scanner(System.in);
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
+       
 
         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
         int[][] playerCard = {
-            {1,  2,  3,  4,  5},
-            {6,  7,  8,  9,  17},
-            {11, 12, -1, 14, 35},
-            {16, 17, 18, 19, 47},
-            {21, 22, 23, 24, 75},
+            {1,  11,   3,   4,   5},
+            {2,  12,   8,   9,  17},
+            {3,  13,  -1,  14,  35},
+            {4,  14,  18,  19,  47},
+            {5,  15,  23,  24,  75},
         };
 
+        // CONSTANT
+        boolean[][] cardMarked = {
+            {false, false, false, false, false},
+            {false, false, false, false, false},
+            {false, false, true , false, false},
+            {false, false, false, false, false},
+            {false, false, false, false, false},
+        };
+     
 
         // CREATE OF INSTANCE OF PLAYER
-        Player player01 = new Player("Player", playerCard, false);
-        Player computer01 =  new Player("Computer 1", playerCard, false);
-        Player computer02 =  new Player("Computer 2", playerCard, false);
-        Player computer03 =  new Player("Computer 3", playerCard, false);
+        Player player01 = new Player("Player", playerCard, cardMarked,  false);
+        Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
+        Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
+        Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
 
         // STORE INSTANCES OF PLAYER TO ARRAY
         Player[] activePlayers = {player01, computer01, computer02, computer03}; 
 
-        arrayIntToChar(player01.playerCard); 
-
-        // NOTE SA 2
-        // Bali mangyayari d2 need natin sya gawan ng pang sort kung sino ung mga nanalo and natalo
-        // Dapat nasa unahan ung mga natalo, then nasa hulihan ung mga nanalo
-        // Sa pag remove, need din natin pag mag create ng panibagong array, or reassign nlng
-        // Bali kung sino ung natira sa array un ang idedeclare natin kung sino ung nanalo
-
-        // THEN GAWA RIN KAYA METHOD PANG DISPLAY, TAKE NOTE SA PAG DISPLAY MAEEXEMPT UNG -1 , BTW MAY UTILS SA BABA PDE MO UN MAGAMIT DITO :3. EXAMPLE: Utils.clrsr()
-        //  if (playerCard[i][j] != -1){
-        //       System.out.print(playerCard[i][j] + " ");
-        // }
         
+        
+        
+        // -- MAIN LOOP -- // 
+        while (true){
+            // create roulette 
+            int roulette = rand.nextInt(75) + 1;
+            
+            // marking system
+
+            // PLAYER01
+            if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
+                System.out.println("Player Card has the number:" + roulette);
+                System.out.println("Number Marked");
+                player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
+            }
+
+            // COMPUTER01
+            if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
+                System.out.println("Computer 1 Card has the number:" + roulette);
+                System.out.println("Number Marked");
+                computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
+            }
+
+            // COMPUTER02
+            if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
+                System.out.println("Computer 2 Card has the number:" + roulette);
+                System.out.println("Number Marked");
+                computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
+            }
+
+            // COMPUTER03
+            if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
+                System.out.println("Computer 3 Card has the number:" + roulette);
+                System.out.println("Number Marked");
+                computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
+            }
+        }
         
     }
 
-    public static char[][] arrayIntToChar(int[][] playerCard){
-        int[] arrDimensions = getDimensions(playerCard);
+    public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int roulleteResult){
 
-        char[][] result = new char[arrDimensions[0]][arrDimensions[1]];
+        // find index of mark
+        int index[] = findArrIntElementIndex(playerCard, roulleteResult);
+
+        // then mark that shit base in index
+
 
         
+
+        return playerMark;
+    }
+    
+    
+    public static int[] findArrIntElementIndex(int[][] playerCard, int target){
+
+        int[] index = new int[2]; 
 
         for (int i = 0; i < playerCard.length; i++) {
             for (int j = 0; j < playerCard[i].length; j++) {
-                
-                int element = playerCard[i][j];
-
-                if (element >= 1 && element <= 15){
-                    result[i][j] = 'B';
-                }
-
-                else if (element >= 16 && element <= 30){
-                    result[i][j] = 'I';
-                }
-                
-                else if (element >= 31 && element <= 45){
-                    result[i][j] = 'N';
-                }
-
-                else if (element >= 46 && element <= 60){
-                    result[i][j] = 'G';
-                }
-
-                else if (element >= 61 && element <= 75){
-                    result[i][j] = 'O';
-                }
-
-                // BONUS LOGIC: No matter what pattern -1 always represent 'N', so therefore we have to just make it 'N' by default
-                else if(element == -1){
-                    result[i][j] = 'N';
+                if (playerCard[i][j] == target) {
+                    index[0] = i; // Row index
+                    index[1] = j; // Column index
+                    return index;
                 }
             }
-            
         }
 
-        display2DArr(result);
-    
-        return result;
+        // If the number is not found, return {-1, -1}
+        return new int[]{-1, -1};
     }
-    
+
+
+    public static boolean isPlayerCardNumberMatched(int[][] playerCard, int roulleteResult){
+        // scan all playerCardNumbers then compare it to roullete result, if it matched, then return true
+        for (int i = 0; i < playerCard.length; i++) {
+            for (int j = 0; j < playerCard[i].length; j++) {
+               if (playerCard[i][j] == roulleteResult){
+                    return true;
+               }
+            }
+        }
+
+        return false;
+    }
+
+
 
     public static int[] getDimensions(int[][] arr){
         int[] dimensions = new int[2];
@@ -112,19 +154,22 @@ public class Bingo01 {
             System.out.println(); // Move to the next line after each row
         }
     } 
+    
 }
 
 
 class Player{
     String playerName;
     int[][] playerCard;
+    boolean[][] playerMarkArr;
     boolean isPlayerWin;
 
 
-    Player(String playerName, int[][] playerCard, boolean isPlayerWin){
+    Player(String playerName, int[][] playerCard, boolean playerMark[][], boolean isPlayerWin){
         this.playerName = playerName;
         this.playerCard = playerCard;
         this.isPlayerWin = isPlayerWin;
+        this.playerMarkArr = playerMark;
     }
 
     // GETTER 
