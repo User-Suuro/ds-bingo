@@ -33,12 +33,12 @@ public class Bingo01 {
         Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
         Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
 
-        // STORE INSTANCES OF PLAYER TO ARRAY
+        // STORE INSTANCES OF PLAYER TO ARRAY (GAWA NYU RIN METHOD PAG SORT NG isPlayerWin also pag remove then pag add)
         Player[] activePlayers = {player01, computer01, computer02, computer03}; 
 
         
         
-        
+        // AQ na sa mismong flow ng game ;-;
         // -- MAIN LOOP -- // 
         while (true){
             // create roulette 
