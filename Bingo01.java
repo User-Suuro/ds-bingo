@@ -6,7 +6,8 @@ public class Bingo01 {
     
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
-       
+        Utils.clrscr();
+
         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
         int[][] playerCard = {
             {1,  11,   3,   4,   5},
@@ -39,6 +40,8 @@ public class Bingo01 {
         for (int i = 0; i < rouletteArr.length; i++) {
             rouletteArr[i] = i + 1;
         }
+
+        
         System.out.println("Roullete: ");
         display1DArrInt(rouletteArr);
         Utils.cont();
@@ -66,7 +69,7 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
                 System.out.println("Player Card has the number: " + roulette);
                 player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-                // display2DArrBoolean(player01.playerMarkArr);
+               
                 if(checkIfPlayerWin(player01.playerMarkArr)){
                     player01.isPlayerWin = true;
                     System.out.println("Player: BINGO! ");
@@ -75,13 +78,14 @@ public class Bingo01 {
                 System.out.println("Player don't have that number");
             }
 
+            displayMarkedCard(player01.playerCard, player01.playerMarkArr);
             Utils.cont();
 
             // COMPUTER01
             if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
                 System.out.println("Computer 1 Card has the number: " + roulette);
                 computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
-                // display2DArrBoolean(computer01.playerMarkArr);
+    
                 if(checkIfPlayerWin(computer01.playerMarkArr)){
                     computer01.isPlayerWin = true;
                     System.out.println("Computer 1: BINGO! ");
@@ -91,13 +95,14 @@ public class Bingo01 {
                 System.out.println("Computer 1 don't have that number"); 
             }
 
+            displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
             Utils.cont();
 
             // COMPUTER02
             if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
                 System.out.println("Computer 2 Card has the number: " + roulette);
                 computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
-                // display2DArrBoolean(computer02.playerMarkArr);
+               
                 if(checkIfPlayerWin(computer02.playerMarkArr)){
                     computer02.isPlayerWin = true;
                     System.out.println("Computer 2: BINGO! ");
@@ -106,13 +111,14 @@ public class Bingo01 {
                 System.out.println("Computer 2 don't have that number");
             }
 
+            displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
             Utils.cont();
 
             // COMPUTER03
             if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
                 System.out.println("Computer 3 Card has the number: " + roulette);
                 computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
-                // display2DArrBoolean(computer03.playerMarkArr);
+               
                 if(checkIfPlayerWin(computer03.playerMarkArr)){
                     computer03.isPlayerWin = true;
                     System.out.println("Computer 3: BINGO! ");
@@ -121,6 +127,9 @@ public class Bingo01 {
                 System.out.println("Computer 3 don't have that number");
             }
 
+            displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+            
+            // break the main loop if there is a winner
             if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin){
                 break;
             }
@@ -132,6 +141,7 @@ public class Bingo01 {
 
     }
 
+    // method to check if the player won
     public static boolean checkIfPlayerWin(boolean[][] playerMark){
 
         // MAP ALL POSSIBLE PATTERNS
@@ -204,6 +214,7 @@ public class Bingo01 {
         return false;
     }
 
+    // method to check if all 1D array contains all true
     public static boolean checkArrIfAllTrue(boolean[] arr){
         for (boolean value : arr) {
             if (!value) {
@@ -213,6 +224,7 @@ public class Bingo01 {
         return true;
     }
 
+    // method to mark the card base in roullete result 
     public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int roulleteResult){
         // find index of mark
 
@@ -223,7 +235,7 @@ public class Bingo01 {
         return playerMark;
     }
     
-    
+    // method for finding specific element in 2D array of integers, returns index
     public static int[] findArrIntElementIndex(int[][] playerCard, int target){
 
         int[] index = new int[2]; 
@@ -242,7 +254,7 @@ public class Bingo01 {
         return new int[]{-1, -1};
     }
 
-
+    // method to check if the player has that number in roullete
     public static boolean isPlayerCardNumberMatched(int[][] playerCard, int roulleteResult){
         // scan all playerCardNumbers then compare it to roullete result, if it matched, then return true
         for (int i = 0; i < playerCard.length; i++) {
@@ -256,8 +268,7 @@ public class Bingo01 {
         return false;
     }
 
-    
-
+    // method to get the dimensions of 2D array, returns an array
     public static int[] getDimensions(int[][] arr){
         int[] dimensions = new int[2];
 
@@ -350,6 +361,8 @@ public class Bingo01 {
         return newArr;
     }
 
+    // -- DISPLAY UTILS -- //
+
     public static void display2DArrChar(char[][] arr){
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
@@ -369,18 +382,29 @@ public class Bingo01 {
     } 
 
     public static void display1DArrInt(int[] arr){
-        int index = 0;
+        int elementsPerRow = 7; // Define the maximum number of elements per row
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + "\t");
-            if (index >= 6){
-                System.out.println();
-                index = 0;
+            System.out.print(arr[i] + "\t"); 
+            if ((i + 1) % elementsPerRow == 0 && i != arr.length - 1) {
+                System.out.println(); // Move to the next line
             }
-            index++;
         }
-        System.out.println(); // Move to the next line after each row
+        System.out.println(); 
     } 
-    
+
+    public static void displayMarkedCard(int[][] playerCard, boolean[][] playerMark){
+        // Display the marked card
+        for (int i = 0; i < playerCard.length; i++) {
+            for (int j = 0; j < playerCard[i].length; j++) {
+                if (playerMark[i][j]) {
+                    System.out.print("X\t");
+                } else {
+                    System.out.print(playerCard[i][j] + "\t"); // Print the previous value for unmarked cells
+                }
+            }
+            System.out.println(); // Move to the next line after each row
+        }
+    }
 }
 
 
