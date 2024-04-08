@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Bingo01 {
     private static Random rand = new Random();
     private static Scanner scanner = new Scanner(System.in);
+    
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
         Utils.clrscr();
@@ -30,13 +31,13 @@ public class Bingo01 {
         
     }
     public static void modernBingoMode(){
-         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
+         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION) (MAKE SURE WALA DUPLICATE NA VALUE)
          int[][] playerCard = {
-            {1,  11,   3,   4,   5},
-            {2,  12,   8,   9,  17},
-            {3,  13,  -1,  14,  35},
-            {4,  14,  18,  19,  47},
-            {5,  15,  23,  24,  75},
+            {1,  11,   16,   26,   31},
+            {2,  12,   17,   27,  32},
+            {3,  13,  -1,    28,  33},
+            {4,  14,  18,    29,  34},
+            {5,  15,  19,    30,  35},
         };
 
         // CONSTANT
@@ -69,15 +70,20 @@ public class Bingo01 {
         display1DArrInt(rouletteArr);
         Utils.cont();
 
-        // ALSO PRINT ALL DISTRIBUTED CARDS BEFORE GOING TO MAIN LOOP
+        // get winning pattern, using random
+        System.out.println("Winning Pattern: ");
+        int randomPatternPicker = rand.nextInt(14); 
+        displayTargetPattern(randomPatternPicker);
+        Utils.cont();
 
+        // ALSO PRINT ALL DISTRIBUTED CARDS BEFORE GOING TO MAIN LOOP
+        
 
 
         // -- MAIN LOOP -- // 
         while (true){
             // create roulette -> should be: once the number called it must be not to be called againq
         
-
             int roulette = rouletteArr[0]; // get the first element -> implemented FIFO
             rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
           
@@ -85,12 +91,14 @@ public class Bingo01 {
             
             // PLAYER01
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
-               
+              
                 player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(player01.playerMarkArr)){
+                
+
+                if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
                     player01.isPlayerWin = true;
                     System.out.println("Player: BINGO! ");
+                        
                     displayMarkedCard(player01.playerCard, player01.playerMarkArr);
                 }
             }
@@ -102,7 +110,7 @@ public class Bingo01 {
                 
                 computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
     
-                if(checkIfPlayerWin(computer01.playerMarkArr)){
+                if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
                     computer01.isPlayerWin = true;
                     System.out.println("Computer 1: BINGO! ");
                     displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
@@ -117,7 +125,7 @@ public class Bingo01 {
               
                 computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
                
-                if(checkIfPlayerWin(computer02.playerMarkArr)){
+                if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
                     computer02.isPlayerWin = true;
                     System.out.println("Computer 2: BINGO! ");
                     displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
@@ -129,7 +137,7 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
                 computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
                
-                if(checkIfPlayerWin(computer03.playerMarkArr)){
+                if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
                     computer03.isPlayerWin = true;
                     System.out.println("Computer 3: BINGO! ");
                     displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
@@ -148,14 +156,15 @@ public class Bingo01 {
     }
 
     public static void traditionalBingoMode(){
-        // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
+        // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION) (MAKE SURE WALA DUPLICATE NA VALUE)
         int[][] playerCard = {
-            {1,  11,   3,   4,   5},
-            {2,  12,   8,   9,  17},
-            {3,  13,  -1,  14,  35},
-            {4,  14,  18,  19,  47},
-            {5,  15,  23,  24,  75},
+            {1,  11,   16,   26,  31},
+            {2,  12,   17,   27,  32},
+            {3,  13,  -1,    28,  33},
+            {4,  14,  18,    29,  34},
+            {5,  15,  19,    30,  35},
         };
+
 
         // CONSTANT
         boolean[][] cardMarked = {
@@ -185,6 +194,10 @@ public class Bingo01 {
         rouletteArr = shuffle(rouletteArr);
         System.out.println("Shuffled Roullete: ");
         display1DArrInt(rouletteArr);
+        Utils.cont();
+
+        int randomPatternPicker = rand.nextInt(14); 
+        displayTargetPattern(randomPatternPicker);
         Utils.cont();
 
         // -- MAIN LOOP -- // 
@@ -204,8 +217,8 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
                 System.out.println("Player Card has the number: " + roulette);
                 player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(player01.playerMarkArr)){
+                
+                if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
                     player01.isPlayerWin = true;
                     System.out.println("Player: BINGO! ");
                 }
@@ -221,7 +234,7 @@ public class Bingo01 {
                 System.out.println("Computer 1 Card has the number: " + roulette);
                 computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
     
-                if(checkIfPlayerWin(computer01.playerMarkArr)){
+                if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
                     computer01.isPlayerWin = true;
                     System.out.println("Computer 1: BINGO! ");
                 }
@@ -238,7 +251,7 @@ public class Bingo01 {
                 System.out.println("Computer 2 Card has the number: " + roulette);
                 computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
                
-                if(checkIfPlayerWin(computer02.playerMarkArr)){
+                if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
                     computer02.isPlayerWin = true;
                     System.out.println("Computer 2: BINGO! ");
                 }
@@ -254,7 +267,7 @@ public class Bingo01 {
                 System.out.println("Computer 3 Card has the number: " + roulette);
                 computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
                
-                if(checkIfPlayerWin(computer03.playerMarkArr)){
+                if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
                     computer03.isPlayerWin = true;
                     System.out.println("Computer 3: BINGO! ");
                 }
@@ -276,8 +289,8 @@ public class Bingo01 {
     }
 
     // method to check if the player won
-    public static boolean checkIfPlayerWin(boolean[][] playerMark){
-
+    public static boolean checkIfPlayerWin(boolean[][] playerMark, int patternPicked){
+ 
         // MAP ALL POSSIBLE PATTERNS
         boolean[] horiztontalPattern01 = {playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4]};
         boolean[] horiztontalPattern02 = {playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4]};
@@ -294,54 +307,75 @@ public class Bingo01 {
         boolean[] diagonalPattern01 = {playerMark[0][0], playerMark[1][1], playerMark[2][2], playerMark[3][3], playerMark[4][4]};
         boolean[] diagonalPattern02 = {playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]};
 
+        boolean[] crossPattern = {
+            playerMark[0][0], playerMark[1][1], playerMark[2][2], playerMark[3][3], playerMark[4][4],
+            playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]
+        };
+
+        boolean[] fullHousePattern = {
+            playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4],
+            playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4],
+            playerMark[2][0], playerMark[2][1], playerMark[2][2], playerMark[2][3], playerMark[2][4],
+            playerMark[3][0], playerMark[3][1], playerMark[3][2], playerMark[3][3], playerMark[3][4],
+            playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4],
+        };
+
         // RETURN TRUE IF THE PATTERN IS PRESENT TO PLAYER MARK
-        
+
         // check if array are all true
-        if (checkArrIfAllTrue(horiztontalPattern01)){
+        if (checkArrIfAllTrue(horiztontalPattern01) && patternPicked == 0){
             return true;
         }
 
-        if (checkArrIfAllTrue(horiztontalPattern02)){
+        if (checkArrIfAllTrue(horiztontalPattern02) && patternPicked == 1){
             return true;
         }
 
-        if (checkArrIfAllTrue(horiztontalPattern03)){
+        if (checkArrIfAllTrue(horiztontalPattern03) && patternPicked == 2){
             return true;
         }
 
-        if (checkArrIfAllTrue(horiztontalPattern04)){
+        if (checkArrIfAllTrue(horiztontalPattern04) && patternPicked == 3){
             return true;
         }
 
-        if (checkArrIfAllTrue(horiztontalPattern05)){
+        if (checkArrIfAllTrue(horiztontalPattern05) && patternPicked == 4){
             return true;
         }
 
-        if (checkArrIfAllTrue(verticalPattern01)){
+        if (checkArrIfAllTrue(verticalPattern01)  && patternPicked == 5){
             return true;
         }
 
-        if (checkArrIfAllTrue(verticalPattern02)){
+        if (checkArrIfAllTrue(verticalPattern02)  && patternPicked == 6){
             return true;
         }
 
-        if (checkArrIfAllTrue(verticalPattern03)){
+        if (checkArrIfAllTrue(verticalPattern03)  && patternPicked == 7){
             return true;
         }
 
-        if (checkArrIfAllTrue(verticalPattern04)){
+        if (checkArrIfAllTrue(verticalPattern04)  && patternPicked == 8){
             return true;
         }
 
-        if (checkArrIfAllTrue(verticalPattern05)){
+        if (checkArrIfAllTrue(verticalPattern05)  && patternPicked == 9){
             return true;
         }
 
-        if (checkArrIfAllTrue(diagonalPattern01)){
+        if (checkArrIfAllTrue(diagonalPattern01)  && patternPicked == 10){
             return true;
         }
 
-        if (checkArrIfAllTrue(diagonalPattern02)){
+        if (checkArrIfAllTrue(diagonalPattern02)  && patternPicked == 11){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(crossPattern) && patternPicked == 12){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(fullHousePattern)  && patternPicked == 13){
             return true;
         }
         
@@ -361,31 +395,30 @@ public class Bingo01 {
     // method to mark the card base in roullete result 
     public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int roulleteResult){
         // find index of mark
-
         int index[] = findArrIntElementIndex(playerCard, roulleteResult);
+
         // then mark that shit base in index
-        playerMark[index[0]][index[1]] = true;
+        if (index != null && index.length == 2) {
+            int rowIndex = index[0];
+            int colIndex = index[1];
+            playerMark[rowIndex][colIndex] = true;
+        }
 
         return playerMark;
     }
     
     // method for finding specific element in 2D array of integers, returns index
-    public static int[] findArrIntElementIndex(int[][] playerCard, int target){
+    public static int[] findArrIntElementIndex(int[][] arr, int target){
 
-        int[] index = new int[2]; 
-
-        for (int i = 0; i < playerCard.length; i++) {
-            for (int j = 0; j < playerCard[i].length; j++) {
-                if (playerCard[i][j] == target) {
-                    index[0] = i; // Row index
-                    index[1] = j; // Column index
-                    return index;
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] == target) {
+                    return new int[]{i, j}; // Return the indices if the target is found
                 }
             }
         }
+        return null; // Return null if the target is not found in the array
 
-        // If the number is not found, return {-1, -1}
-        return new int[]{-1, -1};
     }
 
     // method to check if the player has that number in roullete
@@ -537,6 +570,126 @@ public class Bingo01 {
                 }
             }
             System.out.println(); // Move to the next line after each row
+        }
+    }
+
+    public static void displayTargetPattern(int patternPicked){
+        switch (patternPicked) {
+            case 0:
+                System.out.println("First Row Straight Horizontal");
+                System.out.println("X X X X X");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                break;
+            case 1:
+                System.out.println("Second Row Straight Horizontal");
+                System.out.println("- - - - -");
+                System.out.println("X X X X X");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                break;
+            case 2:
+                System.out.println("Third Row Straight Horizontal");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("X X X X X");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                break;
+            case 3:
+                System.out.println("Fourth Row Straight Horizontal");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("X X X X X");
+                System.out.println("- - - - -");
+                break;
+            case 4:
+                System.out.println("Fifth Row Straight Horizontal");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("- - - - -");
+                System.out.println("X X X X X");
+                break;
+            case 5:
+                System.out.println("First Column Straight Vertical");
+                System.out.println("X - - - -");
+                System.out.println("X - - - -");
+                System.out.println("X - - - -");
+                System.out.println("X - - - -");
+                System.out.println("X - - - -");
+                break;
+            case 6:
+                System.out.println("Second Column Straight Vertical");
+                System.out.println("- X - - -");
+                System.out.println("- X - - -");
+                System.out.println("- X - - -");
+                System.out.println("- X - - -");
+                System.out.println("- X - - -");
+                break;
+            case 7:
+                System.out.println("Third Column Straight Vertical");
+                System.out.println("- - X - -");
+                System.out.println("- - X - -");
+                System.out.println("- - X - -");
+                System.out.println("- - X - -");
+                System.out.println("- - X - -");
+                break;
+            case 8:
+                System.out.println("Fourth Column Straight Vertical");
+                System.out.println("- - - X -");
+                System.out.println("- - - X -");
+                System.out.println("- - - X -");
+                System.out.println("- - - X -");
+                System.out.println("- - - X -");
+                break;
+            case 9:
+                System.out.println("Fifth Column Straight Vertical");
+                System.out.println("- - - - X");
+                System.out.println("- - - - X");
+                System.out.println("- - - - X");
+                System.out.println("- - - - X");
+                System.out.println("- - - - X");
+                break;
+            case 10:
+                System.out.println("Top-Left Diagonal");
+                System.out.println("X - - - -");
+                System.out.println("- X - - -");
+                System.out.println("- - X - -");
+                System.out.println("- - - X -");
+                System.out.println("- - - - X");
+                break;
+            case 11:
+                System.out.println("Top-Right Diagonal");
+                System.out.println("- - - - X");
+                System.out.println("- - - X -");
+                System.out.println("- - X - -");
+                System.out.println("- X - - -");
+                System.out.println("X - - - -");
+                break;
+            case 12:
+                System.out.println("Cross");
+                System.out.println("X - - - X");
+                System.out.println("- X - X -");
+                System.out.println("- - X - -");
+                System.out.println("- X - X -");
+                System.out.println("X - - - X");
+                break;
+            case 13:
+                System.out.println("Full House");
+                System.out.println("X X X X X");
+                System.out.println("X X X X X");
+                System.out.println("X X X X X");
+                System.out.println("X X X X X");
+                System.out.println("X X X X X");
+                break;
+        
+            default:
+                break;
         }
     }
 }
