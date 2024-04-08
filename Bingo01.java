@@ -2,12 +2,152 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class Bingo01 {
-    static Random rand = new Random();
-    
+    private static Random rand = new Random();
+    private static Scanner scanner = new Scanner(System.in);
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
         Utils.clrscr();
+        
+        System.out.println("1: Traditonal Bingo Mode ");
+        System.out.println("2: Modern Bingo Mode ");
 
+        String userChoice = scanner.nextLine();
+        
+        switch (userChoice) {
+            case "1":
+                Utils.clrscr(); 
+                traditionalBingoMode();
+                break;
+            case "2":
+                Utils.clrscr();
+                modernBingoMode();   
+                break;
+            default:
+                System.out.println("Invalid Choice");
+                break;
+        }
+       
+        
+    }
+    public static void modernBingoMode(){
+         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
+         int[][] playerCard = {
+            {1,  11,   3,   4,   5},
+            {2,  12,   8,   9,  17},
+            {3,  13,  -1,  14,  35},
+            {4,  14,  18,  19,  47},
+            {5,  15,  23,  24,  75},
+        };
+
+        // CONSTANT
+        boolean[][] cardMarked = {
+            {false, false, false, false, false},
+            {false, false, false, false, false},
+            {false, false, true , false, false},
+            {false, false, false, false, false},
+            {false, false, false, false, false},
+        };
+     
+        // CREATE OF INSTANCE OF PLAYER
+        Player player01 = new Player("Player", playerCard, cardMarked,  false);
+        Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
+        Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
+        Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
+
+        int rouletteArr[] = new int[75];  
+        for (int i = 0; i < rouletteArr.length; i++) {
+            rouletteArr[i] = i + 1;
+        }
+
+        System.out.println("Roullete: ");
+        display1DArrInt(rouletteArr);
+        Utils.cont();
+
+        // shuffle roullete
+        rouletteArr = shuffle(rouletteArr);
+        System.out.println("Shuffled Roullete: ");
+        display1DArrInt(rouletteArr);
+        Utils.cont();
+
+        // ALSO PRINT ALL DISTRIBUTED CARDS BEFORE GOING TO MAIN LOOP
+
+
+
+        // -- MAIN LOOP -- // 
+        while (true){
+            // create roulette -> should be: once the number called it must be not to be called againq
+        
+
+            int roulette = rouletteArr[0]; // get the first element -> implemented FIFO
+            rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
+          
+            // -- MARKING SYSTEM -- //
+            
+            // PLAYER01
+            if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
+               
+                player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
+               
+                if(checkIfPlayerWin(player01.playerMarkArr)){
+                    player01.isPlayerWin = true;
+                    System.out.println("Player: BINGO! ");
+                    displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+                }
+            }
+
+          
+
+            // COMPUTER01
+            if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
+                
+                computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
+    
+                if(checkIfPlayerWin(computer01.playerMarkArr)){
+                    computer01.isPlayerWin = true;
+                    System.out.println("Computer 1: BINGO! ");
+                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+                }
+               
+            }
+
+          
+
+            // COMPUTER02
+            if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
+              
+                computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
+               
+                if(checkIfPlayerWin(computer02.playerMarkArr)){
+                    computer02.isPlayerWin = true;
+                    System.out.println("Computer 2: BINGO! ");
+                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+                }
+            }
+
+           
+            // COMPUTER03
+            if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
+                computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
+               
+                if(checkIfPlayerWin(computer03.playerMarkArr)){
+                    computer03.isPlayerWin = true;
+                    System.out.println("Computer 3: BINGO! ");
+                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+                }
+            }
+
+           
+            
+            // break the main loop if there is a winner
+            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin){
+                break;
+            }
+
+           
+        }
+    }
+
+    public static void traditionalBingoMode(){
         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
         int[][] playerCard = {
             {1,  11,   3,   4,   5},
@@ -26,22 +166,17 @@ public class Bingo01 {
             {false, false, false, false, false},
         };
      
-
         // CREATE OF INSTANCE OF PLAYER
         Player player01 = new Player("Player", playerCard, cardMarked,  false);
         Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
         Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
         Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
 
-        // STORE INSTANCES OF PLAYER TO ARRAY (GAWA NYU RIN METHOD PAG SORT NG isPlayerWin also pag remove then pag add)
-        Player[] activePlayers = {player01, computer01, computer02, computer03}; 
-
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
             rouletteArr[i] = i + 1;
         }
 
-        
         System.out.println("Roullete: ");
         display1DArrInt(rouletteArr);
         Utils.cont();
@@ -138,7 +273,6 @@ public class Bingo01 {
         }
         
         // FINALIZE -> GET ALL PLAYER WIN THEN CALL THEM
-
     }
 
     // method to check if the player won
