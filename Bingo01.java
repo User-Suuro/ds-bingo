@@ -7,7 +7,6 @@ public class Bingo01 {
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
        
-
         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION)
         int[][] playerCard = {
             {1,  11,   3,   4,   5},
@@ -36,7 +35,6 @@ public class Bingo01 {
         // STORE INSTANCES OF PLAYER TO ARRAY (GAWA NYU RIN METHOD PAG SORT NG isPlayerWin also pag remove then pag add)
         Player[] activePlayers = {player01, computer01, computer02, computer03}; 
 
-        
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
             rouletteArr[i] = i + 1;
@@ -58,8 +56,8 @@ public class Bingo01 {
             display1DArrInt(rouletteArr);
             Utils.cont();
 
-            int roulette = rouletteArr[0]; // implemented FIFO
-            rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the element pag nabunot na ung number
+            int roulette = rouletteArr[0]; // get the first element -> implemented FIFO
+            rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
             System.out.println("Rollete Result: " + roulette);
             Utils.cont();
             // -- MARKING SYSTEM -- //
@@ -68,7 +66,11 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
                 System.out.println("Player Card has the number: " + roulette);
                 player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-                display2DArrBoolean(player01.playerMarkArr);
+                // display2DArrBoolean(player01.playerMarkArr);
+                if(checkIfPlayerWin(player01.playerMarkArr)){
+                    player01.isPlayerWin = true;
+                    System.out.println("Player: BINGO! ");
+                }
             }else{
                 System.out.println("Player don't have that number");
             }
@@ -79,7 +81,12 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
                 System.out.println("Computer 1 Card has the number: " + roulette);
                 computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
-                display2DArrBoolean(computer01.playerMarkArr);
+                // display2DArrBoolean(computer01.playerMarkArr);
+                if(checkIfPlayerWin(computer01.playerMarkArr)){
+                    computer01.isPlayerWin = true;
+                    System.out.println("Computer 1: BINGO! ");
+                }
+               
             }else{
                 System.out.println("Computer 1 don't have that number"); 
             }
@@ -88,9 +95,13 @@ public class Bingo01 {
 
             // COMPUTER02
             if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
-                System.out.println("Computer 2 Card has the number:" + roulette);
+                System.out.println("Computer 2 Card has the number: " + roulette);
                 computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
-                display2DArrBoolean(computer02.playerMarkArr);
+                // display2DArrBoolean(computer02.playerMarkArr);
+                if(checkIfPlayerWin(computer02.playerMarkArr)){
+                    computer02.isPlayerWin = true;
+                    System.out.println("Computer 2: BINGO! ");
+                }
             }else{
                 System.out.println("Computer 2 don't have that number");
             }
@@ -101,14 +112,105 @@ public class Bingo01 {
             if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
                 System.out.println("Computer 3 Card has the number: " + roulette);
                 computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
-                display2DArrBoolean(computer03.playerMarkArr);
+                // display2DArrBoolean(computer03.playerMarkArr);
+                if(checkIfPlayerWin(computer03.playerMarkArr)){
+                    computer03.isPlayerWin = true;
+                    System.out.println("Computer 3: BINGO! ");
+                }
             }else{
                 System.out.println("Computer 3 don't have that number");
+            }
+
+            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin){
+                break;
             }
 
             Utils.cont();
         }
         
+        // FINALIZE -> GET ALL PLAYER WIN THEN CALL THEM
+
+    }
+
+    public static boolean checkIfPlayerWin(boolean[][] playerMark){
+
+        // MAP ALL POSSIBLE PATTERNS
+        boolean[] horiztontalPattern01 = {playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4]};
+        boolean[] horiztontalPattern02 = {playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4]};
+        boolean[] horiztontalPattern03 = {playerMark[2][0], playerMark[2][1], playerMark[2][2], playerMark[2][3], playerMark[2][4]};
+        boolean[] horiztontalPattern04 = {playerMark[3][0], playerMark[3][1], playerMark[3][2], playerMark[3][3], playerMark[3][4]};
+        boolean[] horiztontalPattern05 = {playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4]};
+        
+        boolean[] verticalPattern01 = {playerMark[0][0], playerMark[1][0], playerMark[2][0], playerMark[3][0], playerMark[4][0]};
+        boolean[] verticalPattern02 = {playerMark[0][1], playerMark[1][1], playerMark[2][1], playerMark[3][1], playerMark[4][1]};
+        boolean[] verticalPattern03 = {playerMark[0][2], playerMark[1][2], playerMark[2][2], playerMark[3][2], playerMark[4][2]};
+        boolean[] verticalPattern04 = {playerMark[0][3], playerMark[1][3], playerMark[2][3], playerMark[3][3], playerMark[4][3]};
+        boolean[] verticalPattern05 = {playerMark[0][4], playerMark[1][4], playerMark[2][4], playerMark[3][4], playerMark[4][4]};
+
+        boolean[] diagonalPattern01 = {playerMark[0][0], playerMark[1][1], playerMark[2][2], playerMark[3][3], playerMark[4][4]};
+        boolean[] diagonalPattern02 = {playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]};
+
+        // RETURN TRUE IF THE PATTERN IS PRESENT TO PLAYER MARK
+        
+        // check if array are all true
+        if (checkArrIfAllTrue(horiztontalPattern01)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(horiztontalPattern02)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(horiztontalPattern03)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(horiztontalPattern04)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(horiztontalPattern05)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(verticalPattern01)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(verticalPattern02)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(verticalPattern03)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(verticalPattern04)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(verticalPattern05)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(diagonalPattern01)){
+            return true;
+        }
+
+        if (checkArrIfAllTrue(diagonalPattern02)){
+            return true;
+        }
+        
+        return false;
+    }
+
+    public static boolean checkArrIfAllTrue(boolean[] arr){
+        for (boolean value : arr) {
+            if (!value) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int roulleteResult){
