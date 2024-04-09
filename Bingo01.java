@@ -54,6 +54,7 @@ public class Bingo01 {
         Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
         Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
         Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
+        Player computer04 =  new Player("Computer 4", playerCard, cardMarked, false);
 
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
@@ -119,7 +120,6 @@ public class Bingo01 {
             }
 
           
-
             // COMPUTER02
             if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
               
@@ -144,10 +144,19 @@ public class Bingo01 {
                 }
             }
 
-           
+             // COMPUTER04
+             if(isPlayerCardNumberMatched(computer04.playerCard, roulette)){
+                computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
+               
+                if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
+                    computer04.isPlayerWin = true;
+                    System.out.println("Computer 4: BINGO! ");
+                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                }
+            }
             
             // break the main loop if there is a winner
-            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin){
+            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin || computer04.isPlayerWin){
                 break;
             }
 
@@ -180,6 +189,7 @@ public class Bingo01 {
         Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
         Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
         Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
+        Player computer04 =  new Player("Computer 4", playerCard, cardMarked, false);
 
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
@@ -276,16 +286,29 @@ public class Bingo01 {
             }
 
             displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
-            
+            Utils.cont();
+
+
+            // COMPUTER04
+            if(isPlayerCardNumberMatched(computer04.playerCard, roulette)){
+                System.out.println("Computer 4 Card has the number: " + roulette);
+                computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
+               
+                if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
+                    computer04.isPlayerWin = true;
+                    System.out.println("Computer 4: BINGO! ");
+                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                }
+            }
             // break the main loop if there is a winner
-            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin){
+            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin ||  computer04.isPlayerWin){
                 break;
             }
 
+            displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
             Utils.cont();
         }
         
-        // FINALIZE -> GET ALL PLAYER WIN THEN CALL THEM
     }
 
     // method to check if the player won
@@ -474,7 +497,7 @@ public class Bingo01 {
         return arr;
     }
 
-    //method for removing element in array of string (1D array)
+    //method for removing element in array of int (1D array)
     public static int[] intRemoveOneElement(int[] arr, int removeTarget)
     {
         //find the index
