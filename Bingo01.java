@@ -40,22 +40,13 @@ public class Bingo01 {
         int[][] playerCard3 = generatePlayerCard();
         int[][] playerCard4 = generatePlayerCard();
         int[][] playerCard5 = generatePlayerCard();
-
-        // CONSTANT
-        boolean[][] cardMarked = {
-            {false, false, false, false, false},
-            {false, false, false, false, false},
-            {false, false, true , false, false},
-            {false, false, false, false, false},
-            {false, false, false, false, false},
-        };
      
         // CREATE OF INSTANCE OF PLAYER
-        Player player01 = new Player("Player", playerCard1, cardMarked,  false);
-        Player computer01 =  new Player("Computer 1", playerCard2, cardMarked, false);
-        Player computer02 =  new Player("Computer 2", playerCard3, cardMarked, false);
-        Player computer03 =  new Player("Computer 3", playerCard4, cardMarked, false);
-        Player computer04 =  new Player("Computer 4", playerCard5, cardMarked, false);
+        Player player01 = new Player("Player", playerCard1,  false);
+        Player computer01 =  new Player("Computer 1", playerCard2, false);
+        Player computer02 =  new Player("Computer 2", playerCard3,  false);
+        Player computer03 =  new Player("Computer 3", playerCard4,  false);
+        Player computer04 =  new Player("Computer 4", playerCard5, false);
 
 
         //----------------------------DISPLAY CARDS----------------------------//
@@ -113,72 +104,86 @@ public class Bingo01 {
             // -- MARKING SYSTEM -- //
             
             // PLAYER01
-            if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
-              
-                player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-                
+            player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
+         
 
-                if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
-                    player01.isPlayerWin = true;
-                    System.out.println("Player: BINGO! ");
-                      
-                    displayMarkedCard(player01.playerCard, player01.playerMarkArr);
-                }
+            if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
+                player01.isPlayerWin = true;
+                System.out.println("Player: BINGO! ");
+                displayMarkedCard(player01.playerCard, player01.playerMarkArr);
             }
-
-          
 
             // COMPUTER01
-            if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
-                
-                computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
-    
-                if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
-                    computer01.isPlayerWin = true;
-                    System.out.println("Computer 1: BINGO! ");
-                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
-                }
-               
-            }
-
+            computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
           
-            // COMPUTER02
-            if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
-              
-                computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
-                    computer02.isPlayerWin = true;
-                    System.out.println("Computer 2: BINGO! ");
-                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
-                }
-            }
 
-           
-            // COMPUTER03
-            if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
-                computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
-                    computer03.isPlayerWin = true;
-                    System.out.println("Computer 3: BINGO! ");
-                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
-                }
-            }
-
-             // COMPUTER04
-             if(isPlayerCardNumberMatched(computer04.playerCard, roulette)){
-                computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
-                    computer04.isPlayerWin = true;
-                    System.out.println("Computer 4: BINGO! ");
-                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
-                }
+            if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
+                computer01.isPlayerWin = true;
+                System.out.println("Computer 1: BINGO! ");
+                displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
             }
             
+            
+            // COMPUTER02
+
+            computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
+            
+            if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
+                computer02.isPlayerWin = true;
+                System.out.println("Computer 2: BINGO! ");
+                displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+            }
+           
+            // COMPUTER03
+            computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
+          
+            if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
+                computer03.isPlayerWin = true;
+                System.out.println("Computer 3: BINGO! ");
+                displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+            }
+
+            // COMPUTER04
+            computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
+
+            if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
+                computer04.isPlayerWin = true;
+                System.out.println("Computer 4: BINGO! ");
+                displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+            }
+            
+
             // break the main loop if there is a winner
             if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin || computer04.isPlayerWin){
+
+
+                System.out.println("Player who lost the game: ");
+                if(!player01.isPlayerWin){
+                    System.out.println("Player: ");
+                    displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+                }
+
+                if(!computer01.isPlayerWin){
+                    System.out.println("Computer 1: ");
+                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+                }
+
+                if(!computer02.isPlayerWin){
+                    System.out.println("Computer 2: ");
+                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+                }
+
+                if(!computer03.isPlayerWin){
+                    System.out.println("Computer 3: ");
+                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+                }
+
+                if(!computer04.isPlayerWin){
+                    System.out.println("Computer 4: ");
+                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                }
+                
+
                 break;
             }
 
@@ -187,29 +192,19 @@ public class Bingo01 {
     }
 
     public static void traditionalBingoMode(){
-        
         int[][] playerCard1 = generatePlayerCard();
         int[][] playerCard2 = generatePlayerCard();
         int[][] playerCard3 = generatePlayerCard();
         int[][] playerCard4 = generatePlayerCard();
         int[][] playerCard5 = generatePlayerCard();
 
-
-        // CONSTANT
-        boolean[][] cardMarked = {
-            {false, false, false, false, false},
-            {false, false, false, false, false},
-            {false, false, true , false, false},
-            {false, false, false, false, false},
-            {false, false, false, false, false},
-        };
      
         // CREATE OF INSTANCE OF PLAYER
-        Player player01 = new Player("Player", playerCard1, cardMarked,  false);
-        Player computer01 =  new Player("Computer 1", playerCard2, cardMarked, false);
-        Player computer02 =  new Player("Computer 2", playerCard3, cardMarked, false);
-        Player computer03 =  new Player("Computer 3", playerCard4, cardMarked, false);
-        Player computer04 =  new Player("Computer 4", playerCard5, cardMarked, false);
+        Player player01 = new Player("Player", playerCard1,  false);
+        Player computer01 =  new Player("Computer 1", playerCard2, false);
+        Player computer02 =  new Player("Computer 2", playerCard3, false);
+        Player computer03 =  new Player("Computer 3", playerCard4,  false);
+        Player computer04 =  new Player("Computer 4", playerCard5, false);
 
         //----------------------------DISPLAY CARDS----------------------------//
         System.out.println("Player 1:");
@@ -474,12 +469,12 @@ public class Bingo01 {
         return true;
     }
 
-    // method to mark the card base in roullete result 
-    public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int roulleteResult){
+    // method to mark the card based on roulette result 
+    public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int rouletteResult){
         // find index of mark
-        int index[] = findArrIntElementIndex(playerCard, roulleteResult);
+        int index[] = findArrIntElementIndex(playerCard, rouletteResult);
 
-        // then mark that shit base in index
+        // then mark that spot on the card
         if (index != null && index.length == 2) {
             int rowIndex = index[0];
             int colIndex = index[1];
@@ -488,7 +483,7 @@ public class Bingo01 {
 
         return playerMark;
     }
-    
+
     // method for finding specific element in 2D array of integers, returns index
     public static int[] findArrIntElementIndex(int[][] arr, int target){
 
@@ -515,28 +510,6 @@ public class Bingo01 {
         }
 
         return false;
-    }
-
-    // method to get the dimensions of 2D array, returns an array
-    public static int[] getDimensions(int[][] arr){
-        int[] dimensions = new int[2];
-
-        int x = 0;
-        int y = 0;
-
-        // counts first row (assume that it has row)
-        for (int i = 0; i < arr[0].length; i++){
-            x = x + 1;
-        }
-
-        for (int i = 0; i < arr.length; i++) {
-           y = y + 1;
-        }
-
-        dimensions[0] = x;
-        dimensions[1] = y;
-
-        return dimensions;
     }
 
     //method for shuffling 
@@ -826,15 +799,20 @@ public class Bingo01 {
 class Player{
     String playerName;
     int[][] playerCard;
-    boolean[][] playerMarkArr;
+    boolean[][] playerMarkArr = {
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+        {false, false, true , false, false},
+        {false, false, false, false, false},
+        {false, false, false, false, false},
+    };
     boolean isPlayerWin;
 
 
-    Player(String playerName, int[][] playerCard, boolean playerMark[][], boolean isPlayerWin){
+    Player(String playerName, int[][] playerCard, boolean isPlayerWin){
         this.playerName = playerName;
         this.playerCard = playerCard;
         this.isPlayerWin = isPlayerWin;
-        this.playerMarkArr = playerMark;
     }
 
     // GETTER 
