@@ -1,5 +1,8 @@
 import java.util.Random;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Bingo01 {
     private static Random rand = new Random();
@@ -31,14 +34,12 @@ public class Bingo01 {
         
     }
     public static void modernBingoMode(){
-         // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION) (MAKE SURE WALA DUPLICATE NA VALUE)
-         int[][] playerCard = {
-            {1,  11,   16,   26,   31},
-            {2,  12,   17,   27,  32},
-            {3,  13,  -1,    28,  33},
-            {4,  14,  18,    29,  34},
-            {5,  15,  19,    30,  35},
-        };
+         
+        int[][] playerCard1 = generatePlayerCard();
+        int[][] playerCard2 = generatePlayerCard();
+        int[][] playerCard3 = generatePlayerCard();
+        int[][] playerCard4 = generatePlayerCard();
+        int[][] playerCard5 = generatePlayerCard();
 
         // CONSTANT
         boolean[][] cardMarked = {
@@ -50,11 +51,33 @@ public class Bingo01 {
         };
      
         // CREATE OF INSTANCE OF PLAYER
-        Player player01 = new Player("Player", playerCard, cardMarked,  false);
-        Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
-        Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
-        Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
-        Player computer04 =  new Player("Computer 4", playerCard, cardMarked, false);
+        Player player01 = new Player("Player", playerCard1, cardMarked,  false);
+        Player computer01 =  new Player("Computer 1", playerCard2, cardMarked, false);
+        Player computer02 =  new Player("Computer 2", playerCard3, cardMarked, false);
+        Player computer03 =  new Player("Computer 3", playerCard4, cardMarked, false);
+        Player computer04 =  new Player("Computer 4", playerCard5, cardMarked, false);
+
+
+        //----------------------------DISPLAY CARDS----------------------------//
+        System.out.println("Player 1:");
+        displayPlayerCard(player01.playerCard);
+        Utils.cont();
+         
+        System.out.println("Computer 1:");
+        displayPlayerCard(computer01.playerCard);
+        Utils.cont();
+ 
+        System.out.println("Computer 2:");
+        displayPlayerCard(computer02.playerCard);
+        Utils.cont();
+ 
+        System.out.println("Computer 3:");
+        displayPlayerCard(computer03.playerCard);
+        Utils.cont();
+
+        System.out.println("Computer 4:");
+        displayPlayerCard(computer04.playerCard);
+        Utils.cont();
 
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
@@ -80,7 +103,6 @@ public class Bingo01 {
         // ALSO PRINT ALL DISTRIBUTED CARDS BEFORE GOING TO MAIN LOOP
         
 
-
         // -- MAIN LOOP -- // 
         while (true){
             // create roulette -> should be: once the number called it must be not to be called againq
@@ -99,7 +121,7 @@ public class Bingo01 {
                 if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
                     player01.isPlayerWin = true;
                     System.out.println("Player: BINGO! ");
-                        
+                      
                     displayMarkedCard(player01.playerCard, player01.playerMarkArr);
                 }
             }
@@ -165,14 +187,12 @@ public class Bingo01 {
     }
 
     public static void traditionalBingoMode(){
-        // FIXED FOR NOW, (GAWAN NYU TO METHOD UWU FOR AUTOMATION) (MAKE SURE WALA DUPLICATE NA VALUE)
-        int[][] playerCard = {
-            {1,  11,   16,   26,  31},
-            {2,  12,   17,   27,  32},
-            {3,  13,  -1,    28,  33},
-            {4,  14,  18,    29,  34},
-            {5,  15,  19,    30,  35},
-        };
+        
+        int[][] playerCard1 = generatePlayerCard();
+        int[][] playerCard2 = generatePlayerCard();
+        int[][] playerCard3 = generatePlayerCard();
+        int[][] playerCard4 = generatePlayerCard();
+        int[][] playerCard5 = generatePlayerCard();
 
 
         // CONSTANT
@@ -185,11 +205,34 @@ public class Bingo01 {
         };
      
         // CREATE OF INSTANCE OF PLAYER
-        Player player01 = new Player("Player", playerCard, cardMarked,  false);
-        Player computer01 =  new Player("Computer 1", playerCard, cardMarked, false);
-        Player computer02 =  new Player("Computer 2", playerCard, cardMarked, false);
-        Player computer03 =  new Player("Computer 3", playerCard, cardMarked, false);
-        Player computer04 =  new Player("Computer 4", playerCard, cardMarked, false);
+        Player player01 = new Player("Player", playerCard1, cardMarked,  false);
+        Player computer01 =  new Player("Computer 1", playerCard2, cardMarked, false);
+        Player computer02 =  new Player("Computer 2", playerCard3, cardMarked, false);
+        Player computer03 =  new Player("Computer 3", playerCard4, cardMarked, false);
+        Player computer04 =  new Player("Computer 4", playerCard5, cardMarked, false);
+
+        //----------------------------DISPLAY CARDS----------------------------//
+        System.out.println("Player 1:");
+        displayPlayerCard(player01.playerCard);
+        Utils.cont();
+        
+        System.out.println("Computer 1:");
+        displayPlayerCard(computer01.playerCard);
+        Utils.cont();
+
+        System.out.println("Computer 2:");
+        displayPlayerCard(computer02.playerCard);
+        Utils.cont();
+
+        System.out.println("Computer 3:");
+        displayPlayerCard(computer03.playerCard);
+        Utils.cont();
+
+        System.out.println("Computer 4:");
+        displayPlayerCard(computer04.playerCard);
+        Utils.cont();
+
+        // -- ROULLETE -- //  
 
         int rouletteArr[] = new int[75];  
         for (int i = 0; i < rouletteArr.length; i++) {
@@ -236,7 +279,10 @@ public class Bingo01 {
                 System.out.println("Player don't have that number");
             }
 
-            displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+            if (!player01.isPlayerWin){
+                displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+            }
+            
             Utils.cont();
 
             // COMPUTER01
@@ -253,7 +299,10 @@ public class Bingo01 {
                 System.out.println("Computer 1 don't have that number"); 
             }
 
-            displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+            if (!computer01.isPlayerWin){
+                displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+            }
+          
             Utils.cont();
 
             // COMPUTER02
@@ -269,7 +318,10 @@ public class Bingo01 {
                 System.out.println("Computer 2 don't have that number");
             }
 
-            displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+            if (!computer02.isPlayerWin){
+                displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+            }
+         
             Utils.cont();
 
             // COMPUTER03
@@ -285,7 +337,10 @@ public class Bingo01 {
                 System.out.println("Computer 3 don't have that number");
             }
 
-            displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+            if (!computer03.isPlayerWin){
+                displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+            }
+
             Utils.cont();
 
 
@@ -300,13 +355,17 @@ public class Bingo01 {
                     displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
                 }
             }
+          
+            if (!computer04.isPlayerWin){
+                displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+            }
+            
+            Utils.cont();
+
             // break the main loop if there is a winner
             if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin ||  computer04.isPlayerWin){
                 break;
             }
-
-            displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
-            Utils.cont();
         }
         
     }
@@ -713,6 +772,52 @@ public class Bingo01 {
         
             default:
                 break;
+        }
+    }
+
+
+     //-----------------GENERATE------------------//
+     public static int[][] generatePlayerCard() {
+        int[][] playerCard = new int[5][5];
+
+        List<Integer>[] columns = new List[5];
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = new ArrayList<>();
+            int lowerBound = 1 + 15 * i;
+            int upperBound = 15 * (i + 1);
+            for (int j = lowerBound; j <= upperBound; j++) {
+                columns[i].add(j);
+            }
+            //------------------SHUFFLE------------------//
+            Collections.shuffle(columns[i]);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i == 2 && j == 2) {
+                    playerCard[i][j] = -1;
+                } else {
+                    playerCard[i][j] = columns[j].remove(0);
+                }
+            }
+        }
+
+        return playerCard;
+    }
+    //------------PANGDISPLAY-----------//
+    public static void displayPlayerCard(int[][] playerCard) {
+        System.out.println("B\tI\tN\tG\tO");
+        System.out.println("____________________________________");
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                if (i == 2 && j == 2) {
+                    System.out.print("F\t");
+                } else {
+                    System.out.print(playerCard[i][j] + "\t");
+                }
+            }
+            System.out.println();
         }
     }
 }
