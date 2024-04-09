@@ -125,7 +125,6 @@ public class Bingo01 {
             
             
             // COMPUTER02
-
             computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
             
             if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
@@ -248,6 +247,8 @@ public class Bingo01 {
         displayTargetPattern(randomPatternPicker);
         Utils.cont();
 
+
+
         // -- MAIN LOOP -- // 
         while (true){
             // create roulette -> should be: once the number called it must be not to be called againq
@@ -259,19 +260,22 @@ public class Bingo01 {
             rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
             System.out.println("Rollete Result: " + roulette);
             Utils.cont();
+            
             // -- MARKING SYSTEM -- //
             
             // PLAYER01
+            player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
+
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
                 System.out.println("Player Card has the number: " + roulette);
-                player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-                
-                if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
-                    player01.isPlayerWin = true;
-                    System.out.println("Player: BINGO! ");
-                }
             }else{
                 System.out.println("Player don't have that number");
+            }
+             
+            if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
+                player01.isPlayerWin = true;
+                System.out.println("Player: BINGO! ");
+                displayMarkedCard(player01.playerCard, player01.playerMarkArr);
             }
 
             if (!player01.isPlayerWin){
@@ -281,17 +285,18 @@ public class Bingo01 {
             Utils.cont();
 
             // COMPUTER01
+            computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
+
             if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
                 System.out.println("Computer 1 Card has the number: " + roulette);
-                computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
-    
-                if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
-                    computer01.isPlayerWin = true;
-                    System.out.println("Computer 1: BINGO! ");
-                }
-               
             }else{
                 System.out.println("Computer 1 don't have that number"); 
+            }
+
+            if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
+                computer01.isPlayerWin = true;
+                System.out.println("Computer 1: BINGO! ");
+                displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
             }
 
             if (!computer01.isPlayerWin){
@@ -301,16 +306,18 @@ public class Bingo01 {
             Utils.cont();
 
             // COMPUTER02
+            computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
+
             if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
                 System.out.println("Computer 2 Card has the number: " + roulette);
-                computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
-                    computer02.isPlayerWin = true;
-                    System.out.println("Computer 2: BINGO! ");
-                }
             }else{
                 System.out.println("Computer 2 don't have that number");
+            }
+
+            if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
+                computer02.isPlayerWin = true;
+                System.out.println("Computer 2: BINGO! ");
+                displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
             }
 
             if (!computer02.isPlayerWin){
@@ -320,16 +327,19 @@ public class Bingo01 {
             Utils.cont();
 
             // COMPUTER03
+            computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
+
             if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
                 System.out.println("Computer 3 Card has the number: " + roulette);
-                computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
-                    computer03.isPlayerWin = true;
-                    System.out.println("Computer 3: BINGO! ");
-                }
+                
             }else{
                 System.out.println("Computer 3 don't have that number");
+            }
+
+            if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
+                computer03.isPlayerWin = true;
+                System.out.println("Computer 3: BINGO! ");
+                displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
             }
 
             if (!computer03.isPlayerWin){
@@ -340,17 +350,19 @@ public class Bingo01 {
 
 
             // COMPUTER04
+            computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
             if(isPlayerCardNumberMatched(computer04.playerCard, roulette)){
                 System.out.println("Computer 4 Card has the number: " + roulette);
-                computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
-               
-                if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
-                    computer04.isPlayerWin = true;
-                    System.out.println("Computer 4: BINGO! ");
-                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
-                }
+              
+            
             }
-          
+
+            if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
+                computer04.isPlayerWin = true;
+                System.out.println("Computer 4: BINGO! ");
+                displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+            }
+
             if (!computer04.isPlayerWin){
                 displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
             }
