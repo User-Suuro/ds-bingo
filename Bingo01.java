@@ -7,70 +7,86 @@ import java.util.List;
 public class Bingo01 {
     private static Random rand = new Random();
     private static Scanner scanner = new Scanner(System.in);
-    
+
     // -- MAIN METHOD -- //
     public static void main(String[] args) {
         Utils.clrscr();
-        
-        System.out.println("1: Traditonal Bingo Mode ");
-        System.out.println("2: Modern Bingo Mode ");
+
+        System.out.println();
+        System.out.println("      Welcome to Bingo Game!               ");
+        System.out.println("   Please select a game mode:              ");
+        System.out.println("+---------------------------------+");
+        System.out.println("| Enter 1 for Traditional Bingo   |");
+        System.out.println("| Enter 2 for Modern Bingo        |");
+        System.out.println("+---------------------------------+");
 
         String userChoice = scanner.nextLine();
-        
+
         switch (userChoice) {
             case "1":
-                Utils.clrscr(); 
+                Utils.clrscr();
                 traditionalBingoMode();
                 break;
             case "2":
                 Utils.clrscr();
-                modernBingoMode();   
+                modernBingoMode();
                 break;
             default:
                 System.out.println("Invalid Choice");
                 break;
         }
-       
-        
     }
+
+    // -- MODERN BINGO MODE VIEW -- //
+
     public static void modernBingoMode(){
-         
+
         int[][] playerCard1 = generatePlayerCard();
         int[][] playerCard2 = generatePlayerCard();
         int[][] playerCard3 = generatePlayerCard();
         int[][] playerCard4 = generatePlayerCard();
         int[][] playerCard5 = generatePlayerCard();
-     
+
         // CREATE OF INSTANCE OF PLAYER
         Player player01 = new Player("Player", playerCard1,  false);
         Player computer01 =  new Player("Computer 1", playerCard2, false);
         Player computer02 =  new Player("Computer 2", playerCard3,  false);
         Player computer03 =  new Player("Computer 3", playerCard4,  false);
         Player computer04 =  new Player("Computer 4", playerCard5, false);
-
+        
 
         //----------------------------DISPLAY CARDS----------------------------//
-        System.out.println("Player 1:");
+        System.out.println("╔══════════════════════════╗");
+        System.out.println("║    Player 1 CARD:        ║");
+        System.out.println("╚══════════════════════════╝");
         displayPlayerCard(player01.playerCard);
         Utils.cont();
-         
-        System.out.println("Computer 1:");
+
+        System.out.println("╔══════════════════════════╗");
+        System.out.println("║    Computer 1 CARD:      ║");
+        System.out.println("╚══════════════════════════╝");
         displayPlayerCard(computer01.playerCard);
         Utils.cont();
- 
-        System.out.println("Computer 2:");
+
+        System.out.println("╔══════════════════════════╗");
+        System.out.println("║    Computer 2 CARD:      ║");
+        System.out.println("╚══════════════════════════╝");
         displayPlayerCard(computer02.playerCard);
         Utils.cont();
- 
-        System.out.println("Computer 3:");
+
+        System.out.println("╔═════════════════════════╗");
+        System.out.println("║    Computer 3 CARD:     ║");
+        System.out.println("╚═════════════════════════╝");
         displayPlayerCard(computer03.playerCard);
         Utils.cont();
 
-        System.out.println("Computer 4:");
+        System.out.println("╔═════════════════════════╗");
+        System.out.println("║    Computer 4 CARD:     ║");
+        System.out.println("╚═════════════════════════╝");
         displayPlayerCard(computer04.playerCard);
         Utils.cont();
 
-        int rouletteArr[] = new int[75];  
+        int rouletteArr[] = new int[75];
         for (int i = 0; i < rouletteArr.length; i++) {
             rouletteArr[i] = i + 1;
         }
@@ -87,108 +103,161 @@ public class Bingo01 {
 
         // get winning pattern, using random
         System.out.println("Winning Pattern: ");
-        int randomPatternPicker = rand.nextInt(14); 
+        int randomPatternPicker = rand.nextInt(14);
         displayTargetPattern(randomPatternPicker);
         Utils.cont();
 
         // ALSO PRINT ALL DISTRIBUTED CARDS BEFORE GOING TO MAIN LOOP
-        
+        System.out.println("╔═════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║    MAIN GAME WILL NOW BEGIN (MODERN MODE WILL SKIP THE PROCESS)     ║");
+        System.out.println("╚═════════════════════════════════════════════════════════════════════╝");
 
-        // -- MAIN LOOP -- // 
+        Utils.cont();
+
+
+        // -- MAIN LOOP -- //
         while (true){
             // create roulette -> should be: once the number called it must be not to be called againq
-        
+
             int roulette = rouletteArr[0]; // get the first element -> implemented FIFO
             rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
-          
+
             // -- MARKING SYSTEM -- //
-            
+
             // PLAYER01
             player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
-         
+
 
             if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
+                displayGameResultInterface();
                 player01.isPlayerWin = true;
-                System.out.println("Player: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║    Player 1: BINGO!      ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+                Utils.cont();
             }
 
             // COMPUTER01
             computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
-          
+
 
             if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
+                displayGameResultInterface();
                 computer01.isPlayerWin = true;
-                System.out.println("Computer 1: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 1: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+                Utils.cont();
             }
-            
-            
+
+
             // COMPUTER02
             computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
-            
+
             if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
+                displayGameResultInterface();
                 computer02.isPlayerWin = true;
-                System.out.println("Computer 2: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 2: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+                Utils.cont();
             }
-           
+
             // COMPUTER03
             computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
-          
+
             if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
+                displayGameResultInterface();
                 computer03.isPlayerWin = true;
-                System.out.println("Computer 3: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 3: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+                Utils.cont();
             }
 
             // COMPUTER04
             computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
 
             if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
+                displayGameResultInterface();
                 computer04.isPlayerWin = true;
-                System.out.println("Computer 4: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 4: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                Utils.cont();
             }
-            
+
 
             // break the main loop if there is a winner
             if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin || computer04.isPlayerWin){
-
-
-                System.out.println("Player who lost the game: ");
+    
                 if(!player01.isPlayerWin){
-                    System.out.println("Player: ");
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔═══════════════╗");
+                    System.out.println("║   PLAYER 1:   ║");
+                    System.out.println("╚═══════════════╝");
                     displayMarkedCard(player01.playerCard, player01.playerMarkArr);
-                }
-
-                if(!computer01.isPlayerWin){
-                    System.out.println("Computer 1: ");
-                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
-                }
-
-                if(!computer02.isPlayerWin){
-                    System.out.println("Computer 2: ");
-                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
-                }
-
-                if(!computer03.isPlayerWin){
-                    System.out.println("Computer 3: ");
-                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
-                }
-
-                if(!computer04.isPlayerWin){
-                    System.out.println("Computer 4: ");
-                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                    Utils.cont();
                 }
                 
-
+                if(!computer01.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 1:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+                    Utils.cont();
+                }
+          
+                if(!computer02.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 2:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+                    Utils.cont();
+                }
+          
+                if(!computer03.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 3:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+                    Utils.cont();
+                }
+              
+                if(!computer04.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 4:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                    Utils.cont();
+                }
                 break;
             }
-
-           
         }
+
+        System.out.println("╔════════════════════════╗");
+        System.out.println("║   END OF BINGO GAME    ║");
+        System.out.println("╚════════════════════════╝");
+
+
+
     }
+
+    // -- TRADITIONAL BINGO MODE VIEW -- //
 
     public static void traditionalBingoMode(){
         int[][] playerCard1 = generatePlayerCard();
@@ -197,7 +266,7 @@ public class Bingo01 {
         int[][] playerCard4 = generatePlayerCard();
         int[][] playerCard5 = generatePlayerCard();
 
-     
+
         // CREATE OF INSTANCE OF PLAYER
         Player player01 = new Player("Player", playerCard1,  false);
         Player computer01 =  new Player("Computer 1", playerCard2, false);
@@ -206,29 +275,39 @@ public class Bingo01 {
         Player computer04 =  new Player("Computer 4", playerCard5, false);
 
         //----------------------------DISPLAY CARDS----------------------------//
-        System.out.println("Player 1:");
+        System.out.println("+----------------------------------+");
+        System.out.println("|            Player 1              |");
+        System.out.println("+----------------------------------+");
         displayPlayerCard(player01.playerCard);
         Utils.cont();
-        
-        System.out.println("Computer 1:");
+
+        System.out.println("+----------------------------------+");
+        System.out.println("|           Computer 1             |");
+        System.out.println("+----------------------------------+");
         displayPlayerCard(computer01.playerCard);
         Utils.cont();
 
-        System.out.println("Computer 2:");
+        System.out.println("+----------------------------------+");
+        System.out.println("|           Computer 2             |");
+        System.out.println("+----------------------------------+");
         displayPlayerCard(computer02.playerCard);
         Utils.cont();
 
-        System.out.println("Computer 3:");
+        System.out.println("+----------------------------------+");
+        System.out.println("|           Computer 3             |");
+        System.out.println("+----------------------------------+");
         displayPlayerCard(computer03.playerCard);
         Utils.cont();
 
-        System.out.println("Computer 4:");
+        System.out.println("+----------------------------------+");
+        System.out.println("|           Computer 4             |");
+        System.out.println("+----------------------------------+");
         displayPlayerCard(computer04.playerCard);
         Utils.cont();
 
-        // -- ROULLETE -- //  
+        // -- ROULLETE -- //
 
-        int rouletteArr[] = new int[75];  
+        int rouletteArr[] = new int[75];
         for (int i = 0; i < rouletteArr.length; i++) {
             rouletteArr[i] = i + 1;
         }
@@ -243,13 +322,13 @@ public class Bingo01 {
         display1DArrInt(rouletteArr);
         Utils.cont();
 
-        int randomPatternPicker = rand.nextInt(14); 
+        int randomPatternPicker = rand.nextInt(14);
         displayTargetPattern(randomPatternPicker);
         Utils.cont();
 
 
 
-        // -- MAIN LOOP -- // 
+        // -- MAIN LOOP -- //
         while (true){
             // create roulette -> should be: once the number called it must be not to be called againq
             System.out.println("Current Roullete: ");
@@ -260,85 +339,93 @@ public class Bingo01 {
             rouletteArr = intRemoveOneElement(rouletteArr, roulette); // remove the first element pag nabunot na ung number
             System.out.println("Rollete Result: " + roulette);
             Utils.cont();
-            
+
             // -- MARKING SYSTEM -- //
-            
+
             // PLAYER01
             player01.playerMarkArr = markCard(player01.playerCard, player01.playerMarkArr, roulette);
 
             if(isPlayerCardNumberMatched(player01.playerCard, roulette)){
-                System.out.println("Player Card has the number: " + roulette);
+                displayHasNumber(player01.playerName, roulette);    
             }else{
-                System.out.println("Player don't have that number");
+                displayHasNotNumber(player01.playerName, roulette);
             }
-             
+
             if(checkIfPlayerWin(player01.playerMarkArr, randomPatternPicker)){
                 player01.isPlayerWin = true;
-                System.out.println("Player: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║    Player 1: BINGO!      ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(player01.playerCard, player01.playerMarkArr);
             }
 
             if (!player01.isPlayerWin){
                 displayMarkedCard(player01.playerCard, player01.playerMarkArr);
             }
-            
+
             Utils.cont();
 
             // COMPUTER01
             computer01.playerMarkArr = markCard(computer01.playerCard, computer01.playerMarkArr, roulette);
 
             if(isPlayerCardNumberMatched(computer01.playerCard, roulette)){
-                System.out.println("Computer 1 Card has the number: " + roulette);
+                displayHasNumber(computer01.playerName, roulette); 
             }else{
-                System.out.println("Computer 1 don't have that number"); 
+                displayHasNotNumber(computer01.playerName, roulette); 
             }
 
             if(checkIfPlayerWin(computer01.playerMarkArr, randomPatternPicker)){
                 computer01.isPlayerWin = true;
-                System.out.println("Computer 1: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 1: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
             }
 
             if (!computer01.isPlayerWin){
                 displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
             }
-          
+
             Utils.cont();
 
             // COMPUTER02
             computer02.playerMarkArr = markCard(computer02.playerCard, computer02.playerMarkArr, roulette);
 
             if(isPlayerCardNumberMatched(computer02.playerCard, roulette)){
-                System.out.println("Computer 2 Card has the number: " + roulette);
+                displayHasNumber(computer02.playerName, roulette); 
             }else{
-                System.out.println("Computer 2 don't have that number");
+                displayHasNotNumber(computer02.playerName, roulette); 
             }
 
             if(checkIfPlayerWin(computer02.playerMarkArr, randomPatternPicker)){
                 computer02.isPlayerWin = true;
-                System.out.println("Computer 2: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 2: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
             }
 
             if (!computer02.isPlayerWin){
                 displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
             }
-         
+
             Utils.cont();
 
             // COMPUTER03
             computer03.playerMarkArr = markCard(computer03.playerCard, computer03.playerMarkArr, roulette);
 
             if(isPlayerCardNumberMatched(computer03.playerCard, roulette)){
-                System.out.println("Computer 3 Card has the number: " + roulette);
-                
+                displayHasNumber(computer03.playerName, roulette); 
+
             }else{
-                System.out.println("Computer 3 don't have that number");
+                displayHasNotNumber(computer03.playerName, roulette); 
             }
 
             if(checkIfPlayerWin(computer03.playerMarkArr, randomPatternPicker)){
                 computer03.isPlayerWin = true;
-                System.out.println("Computer 3: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 3: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
             }
 
@@ -352,41 +439,98 @@ public class Bingo01 {
             // COMPUTER04
             computer04.playerMarkArr = markCard(computer04.playerCard, computer04.playerMarkArr, roulette);
             if(isPlayerCardNumberMatched(computer04.playerCard, roulette)){
-                System.out.println("Computer 4 Card has the number: " + roulette);
-              
-            
+                displayHasNumber(computer04.playerName, roulette);
+
+            }else{
+                displayHasNotNumber(computer03.playerName, roulette); 
             }
 
             if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
                 computer04.isPlayerWin = true;
-                System.out.println("Computer 4: BINGO! ");
+                System.out.println("╔══════════════════════════╗");
+                System.out.println("║   Computer 4: BINGO!     ║");
+                System.out.println("╚══════════════════════════╝");
                 displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
             }
 
             if (!computer04.isPlayerWin){
                 displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
             }
-            
+
             Utils.cont();
 
             // break the main loop if there is a winner
-            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin ||  computer04.isPlayerWin){
+            // break the main loop if there is a winner
+            if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin || computer04.isPlayerWin){
+    
+                if(!player01.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔═══════════════╗");
+                    System.out.println("║   PLAYER 1:   ║");
+                    System.out.println("╚═══════════════╝");
+                    displayMarkedCard(player01.playerCard, player01.playerMarkArr);
+                    Utils.cont();
+                }
+                
+                if(!computer01.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 1:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer01.playerCard, computer01.playerMarkArr);
+                    Utils.cont();
+                }
+          
+                if(!computer02.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 2:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer02.playerCard, computer02.playerMarkArr);
+                    Utils.cont();
+                }
+          
+                if(!computer03.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 3:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer03.playerCard, computer03.playerMarkArr);
+                    Utils.cont();
+                }
+              
+                if(!computer04.isPlayerWin){
+                    displayGameResultInterface();
+                    displayLostInterface(); 
+                    System.out.println("╔════════════════╗");
+                    System.out.println("║   COMPUTER 4:  ║");
+                    System.out.println("╚════════════════╝");
+                    displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
+                    Utils.cont();
+                }
                 break;
             }
         }
-        
+
+        System.out.println("╔════════════════════════╗");
+        System.out.println("║   END OF BINGO GAME    ║");
+        System.out.println("╚════════════════════════╝");
     }
 
     // method to check if the player won
     public static boolean checkIfPlayerWin(boolean[][] playerMark, int patternPicked){
- 
+
         // MAP ALL POSSIBLE PATTERNS
         boolean[] horiztontalPattern01 = {playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4]};
         boolean[] horiztontalPattern02 = {playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4]};
         boolean[] horiztontalPattern03 = {playerMark[2][0], playerMark[2][1], playerMark[2][2], playerMark[2][3], playerMark[2][4]};
         boolean[] horiztontalPattern04 = {playerMark[3][0], playerMark[3][1], playerMark[3][2], playerMark[3][3], playerMark[3][4]};
         boolean[] horiztontalPattern05 = {playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4]};
-        
+
         boolean[] verticalPattern01 = {playerMark[0][0], playerMark[1][0], playerMark[2][0], playerMark[3][0], playerMark[4][0]};
         boolean[] verticalPattern02 = {playerMark[0][1], playerMark[1][1], playerMark[2][1], playerMark[3][1], playerMark[4][1]};
         boolean[] verticalPattern03 = {playerMark[0][2], playerMark[1][2], playerMark[2][2], playerMark[3][2], playerMark[4][2]};
@@ -397,16 +541,16 @@ public class Bingo01 {
         boolean[] diagonalPattern02 = {playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]};
 
         boolean[] crossPattern = {
-            playerMark[0][0], playerMark[1][1], playerMark[2][2], playerMark[3][3], playerMark[4][4],
-            playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]
+                playerMark[0][0], playerMark[1][1], playerMark[2][2], playerMark[3][3], playerMark[4][4],
+                playerMark[0][4], playerMark[1][3], playerMark[2][2], playerMark[3][1], playerMark[4][0]
         };
 
         boolean[] fullHousePattern = {
-            playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4],
-            playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4],
-            playerMark[2][0], playerMark[2][1], playerMark[2][2], playerMark[2][3], playerMark[2][4],
-            playerMark[3][0], playerMark[3][1], playerMark[3][2], playerMark[3][3], playerMark[3][4],
-            playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4],
+                playerMark[0][0], playerMark[0][1], playerMark[0][2], playerMark[0][3], playerMark[0][4],
+                playerMark[1][0], playerMark[1][1], playerMark[1][2], playerMark[1][3], playerMark[1][4],
+                playerMark[2][0], playerMark[2][1], playerMark[2][2], playerMark[2][3], playerMark[2][4],
+                playerMark[3][0], playerMark[3][1], playerMark[3][2], playerMark[3][3], playerMark[3][4],
+                playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4],
         };
 
         // RETURN TRUE IF THE PATTERN IS PRESENT TO PLAYER MARK
@@ -467,7 +611,7 @@ public class Bingo01 {
         if (checkArrIfAllTrue(fullHousePattern)  && patternPicked == 13){
             return true;
         }
-        
+
         return false;
     }
 
@@ -481,7 +625,7 @@ public class Bingo01 {
         return true;
     }
 
-    // method to mark the card based on roulette result 
+    // method to mark the card based on roulette result
     public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int rouletteResult){
         // find index of mark
         int index[] = findArrIntElementIndex(playerCard, rouletteResult);
@@ -515,22 +659,22 @@ public class Bingo01 {
         // scan all playerCardNumbers then compare it to roullete result, if it matched, then return true
         for (int i = 0; i < playerCard.length; i++) {
             for (int j = 0; j < playerCard[i].length; j++) {
-               if (playerCard[i][j] == roulleteResult){
+                if (playerCard[i][j] == roulleteResult){
                     return true;
-               }
+                }
             }
         }
 
         return false;
     }
 
-    //method for shuffling 
+    //method for shuffling
     public static int[] shuffle(int[] arr)
     {
         //fisher-yates shuffle
         int index;
         int temp;
-        
+
         for (int i = arr.length - 1; i > 0; i--)
         {
             index = rand.nextInt(i + 1);
@@ -565,10 +709,10 @@ public class Bingo01 {
     public static int findIntIndex(int[] arr, int target){
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] == target) {
-                return i; 
+                return i;
             }
         }
-        return -1; 
+        return -1;
     }
 
     //method for removing null in array of string
@@ -600,34 +744,36 @@ public class Bingo01 {
     public static void display2DArrChar(char[][] arr){
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-               System.out.print(arr[i][j] + " ");
+                System.out.print(arr[i][j] + " ");
             }
             System.out.println(); // Move to the next line after each row
         }
-    } 
+    }
 
     public static void display2DArrBoolean(boolean[][] arr){
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
-               System.out.print(arr[i][j] + " ");
+                System.out.print(arr[i][j] + " ");
             }
             System.out.println(); // Move to the next line after each row
         }
-    } 
+    }
 
     public static void display1DArrInt(int[] arr){
         int elementsPerRow = 7; // Define the maximum number of elements per row
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(arr[i] + "\t"); 
+            System.out.print(arr[i] + "\t");
             if ((i + 1) % elementsPerRow == 0 && i != arr.length - 1) {
                 System.out.println(); // Move to the next line
             }
         }
-        System.out.println(); 
-    } 
+        System.out.println();
+    }
 
     public static void displayMarkedCard(int[][] playerCard, boolean[][] playerMark){
         // Display the marked card
+        System.out.println("B\tI\tN\tG\tO");
+        System.out.println("__________________________________");
         for (int i = 0; i < playerCard.length; i++) {
             for (int j = 0; j < playerCard[i].length; j++) {
                 if (playerMark[i][j]) {
@@ -638,6 +784,73 @@ public class Bingo01 {
             }
             System.out.println(); // Move to the next line after each row
         }
+    }
+
+    public static void displayPlayerCard(int[][] playerCard) {
+        System.out.println("B\tI\tN\tG\tO");
+        System.out.println("__________________________________");
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+
+                if (i == 2 && j == 2) {
+                    System.out.print("F\t");
+                } else {
+                    System.out.print(playerCard[i][j] + "\t");
+                }
+            }
+            System.out.println();
+        }
+    }
+
+    public static void displayHasNumber(String playerName, int number){
+         // CALCULATE BORDER TOP
+
+        System.out.print("+");
+        for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 18; i++){
+            System.out.print("-");
+        }
+        System.out.println("+");  
+        
+        System.out.println("| "+ playerName  + " has the number " + number + " |" );
+
+        // CALCULATE BORDER BOTTOM 
+        System.out.print("+");
+
+        for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 18; i++){
+            System.out.print("-");
+        }
+
+        System.out.println("+"); 
+    }
+
+    public static void displayHasNotNumber(String playerName, int number){
+        System.out.print("+");
+        for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 25; i++){
+            System.out.print("-");
+        }
+        System.out.println("+"); 
+
+        System.out.println("| "+ playerName  + " don't have the number " + number + " |" );
+
+        System.out.print("+");
+
+        for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 25; i++){
+            System.out.print("-");
+        }
+
+        System.out.println("+"); 
+    }
+
+    public static void displayGameResultInterface(){
+        System.out.println("╔═════════════════════════════════════════════════════════════════════╗");
+        System.out.println("║                            GAME RESULT                              ║");
+        System.out.println("╚═════════════════════════════════════════════════════════════════════╝");
+    }
+
+    public static void displayLostInterface(){
+        System.out.println("╔════════════════════════════════╗");
+        System.out.println("║   PLAYERS WHO LOST THE GAME:   ║");
+        System.out.println("╚════════════════════════════════╝");
     }
 
     public static void displayTargetPattern(int patternPicked){
@@ -754,15 +967,15 @@ public class Bingo01 {
                 System.out.println("X X X X X");
                 System.out.println("X X X X X");
                 break;
-        
+
             default:
                 break;
         }
     }
 
 
-     //-----------------GENERATE------------------//
-     public static int[][] generatePlayerCard() {
+    //-----------------GENERATE------------------//
+    public static int[][] generatePlayerCard() {
         int[][] playerCard = new int[5][5];
 
         List<Integer>[] columns = new List[5];
@@ -789,22 +1002,8 @@ public class Bingo01 {
 
         return playerCard;
     }
-    //------------PANGDISPLAY-----------//
-    public static void displayPlayerCard(int[][] playerCard) {
-        System.out.println("B\tI\tN\tG\tO");
-        System.out.println("____________________________________");
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
 
-                if (i == 2 && j == 2) {
-                    System.out.print("F\t");
-                } else {
-                    System.out.print(playerCard[i][j] + "\t");
-                }
-            }
-            System.out.println();
-        }
-    }
+   
 }
 
 
@@ -812,11 +1011,11 @@ class Player{
     String playerName;
     int[][] playerCard;
     boolean[][] playerMarkArr = {
-        {false, false, false, false, false},
-        {false, false, false, false, false},
-        {false, false, true , false, false},
-        {false, false, false, false, false},
-        {false, false, false, false, false},
+            {false, false, false, false, false},
+            {false, false, false, false, false},
+            {false, false, true , false, false},
+            {false, false, false, false, false},
+            {false, false, false, false, false},
     };
     boolean isPlayerWin;
 
@@ -827,7 +1026,7 @@ class Player{
         this.isPlayerWin = isPlayerWin;
     }
 
-    // GETTER 
+    // GETTER
     public int[][] getPlayerCard(){
         return playerCard;
     }
@@ -850,7 +1049,7 @@ class Utils{
             System.out.println("Failed to clear the screen.");
         }
     }
-    
+
     // Method for pausing in command prompt
     public static void sleep(long ms){
         try{
@@ -865,5 +1064,4 @@ class Utils{
         Utils.clrscr();
     }
 }
-
 
