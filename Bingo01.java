@@ -442,7 +442,7 @@ public class Bingo01 {
                 displayHasNumber(computer04.playerName, roulette);
 
             }else{
-                displayHasNotNumber(computer03.playerName, roulette); 
+                displayHasNotNumber(computer04.playerName, roulette); 
             }
 
             if(checkIfPlayerWin(computer04.playerMarkArr, randomPatternPicker)){
@@ -521,7 +521,10 @@ public class Bingo01 {
         System.out.println("╚════════════════════════╝");
     }
 
-    // method to check if the player won
+    // -- UTILS -- //
+
+    // -- CHECK IF PLAYER WON -- //
+
     public static boolean checkIfPlayerWin(boolean[][] playerMark, int patternPicked){
 
         // MAP ALL POSSIBLE PATTERNS
@@ -553,7 +556,6 @@ public class Bingo01 {
                 playerMark[4][0], playerMark[4][1], playerMark[4][2], playerMark[4][3], playerMark[4][4],
         };
 
-        // RETURN TRUE IF THE PATTERN IS PRESENT TO PLAYER MARK
 
         // check if array are all true
         if (checkArrIfAllTrue(horiztontalPattern01) && patternPicked == 0){
@@ -615,7 +617,8 @@ public class Bingo01 {
         return false;
     }
 
-    // method to check if all 1D array contains all true
+    // -- CHECKER IF 1D ARRAY CONTAINS ALL TRUE -- //
+
     public static boolean checkArrIfAllTrue(boolean[] arr){
         for (boolean value : arr) {
             if (!value) {
@@ -625,7 +628,8 @@ public class Bingo01 {
         return true;
     }
 
-    // method to mark the card based on roulette result
+    // -- MARK THE CARD BASE IN ROULLETE RESULT -- //
+
     public static boolean[][] markCard(int[][] playerCard, boolean[][] playerMark, int rouletteResult){
         // find index of mark
         int index[] = findArrIntElementIndex(playerCard, rouletteResult);
@@ -640,21 +644,23 @@ public class Bingo01 {
         return playerMark;
     }
 
-    // method for finding specific element in 2D array of integers, returns index
+    // -- FIND SPECIFIC ELEMENT IN 2D ARRAY, RETURNS ARRAY OF INDEX -- //
+
     public static int[] findArrIntElementIndex(int[][] arr, int target){
 
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[i].length; j++) {
                 if (arr[i][j] == target) {
-                    return new int[]{i, j}; // Return the indices if the target is found
+                    return new int[]{i, j}; 
                 }
             }
         }
-        return null; // Return null if the target is not found in the array
+        return null; 
 
     }
 
-    // method to check if the player has that number in roullete
+    // -- CHECK IF THE PLAYER CARD HAS THAT NUMBER BASE IN ROULLETE -- //
+
     public static boolean isPlayerCardNumberMatched(int[][] playerCard, int roulleteResult){
         // scan all playerCardNumbers then compare it to roullete result, if it matched, then return true
         for (int i = 0; i < playerCard.length; i++) {
@@ -668,7 +674,8 @@ public class Bingo01 {
         return false;
     }
 
-    //method for shuffling
+    // -- SHUFFLE METHOD -- //
+    
     public static int[] shuffle(int[] arr)
     {
         //fisher-yates shuffle
@@ -685,7 +692,8 @@ public class Bingo01 {
         return arr;
     }
 
-    //method for removing element in array of int (1D array)
+    // -- REMOVING ELEMENT IN 1D ARRAY BASE IN TARGET VALUE -- //
+
     public static int[] intRemoveOneElement(int[] arr, int removeTarget)
     {
         //find the index
@@ -715,7 +723,8 @@ public class Bingo01 {
         return -1;
     }
 
-    //method for removing null in array of string
+    // -- REMOVING NULL IN ARRAY OF INT -- //
+
     public static int[] removeNegativeOne(int[] arr){
         // Count non-null values
         int countNonNull = 0;
@@ -738,6 +747,37 @@ public class Bingo01 {
 
         return newArr;
     }
+
+    // -- GENERATE CARDS -- //
+
+    public static int[][] generatePlayerCard() {
+        int[][] playerCard = new int[5][5];
+
+        List<Integer>[] columns = new List[5];
+        for (int i = 0; i < columns.length; i++) {
+            columns[i] = new ArrayList<>();
+            int lowerBound = 1 + 15 * i;
+            int upperBound = 15 * (i + 1);
+            for (int j = lowerBound; j <= upperBound; j++) {
+                columns[i].add(j);
+            }
+            //------------------SHUFFLE------------------//
+            Collections.shuffle(columns[i]);
+        }
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (i == 2 && j == 2) {
+                    playerCard[i][j] = -1;
+                } else {
+                    playerCard[i][j] = columns[j].remove(0);
+                }
+            }
+        }
+
+        return playerCard;
+    }
+
 
     // -- DISPLAY UTILS -- //
 
@@ -974,34 +1014,7 @@ public class Bingo01 {
     }
 
 
-    //-----------------GENERATE------------------//
-    public static int[][] generatePlayerCard() {
-        int[][] playerCard = new int[5][5];
-
-        List<Integer>[] columns = new List[5];
-        for (int i = 0; i < columns.length; i++) {
-            columns[i] = new ArrayList<>();
-            int lowerBound = 1 + 15 * i;
-            int upperBound = 15 * (i + 1);
-            for (int j = lowerBound; j <= upperBound; j++) {
-                columns[i].add(j);
-            }
-            //------------------SHUFFLE------------------//
-            Collections.shuffle(columns[i]);
-        }
-
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (i == 2 && j == 2) {
-                    playerCard[i][j] = -1;
-                } else {
-                    playerCard[i][j] = columns[j].remove(0);
-                }
-            }
-        }
-
-        return playerCard;
-    }
+    
 
    
 }
