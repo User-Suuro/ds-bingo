@@ -439,13 +439,12 @@ public class Bingo01 {
             if (!computer04.isPlayerWin){
                 displayMarkedCard(computer04.playerCard, computer04.playerMarkArr);
             }
-
+            
             Utils.cont();
 
-            
             // break the main loop if there is a winner
             if (player01.isPlayerWin || computer01.isPlayerWin || computer02.isPlayerWin || computer03.isPlayerWin || computer04.isPlayerWin){
-    
+                
                 if(!player01.isPlayerWin){
                     displayGameResultInterface();
                     displayLostInterface(); 
