@@ -1,8 +1,5 @@
 import java.util.Random;
 import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class Bingo01 {
     private static Random rand = new Random();
@@ -725,16 +722,15 @@ public class Bingo01 {
     public static int[][] generatePlayerCard() {
         int[][] playerCard = new int[5][5];
 
-        List<Integer>[] columns = new List[5];
+        int[][] columns = new int[5][15];
         for (int i = 0; i < columns.length; i++) {
-            columns[i] = new ArrayList<>();
             int lowerBound = 1 + 15 * i;
             int upperBound = 15 * (i + 1);
             for (int j = lowerBound; j <= upperBound; j++) {
-                columns[i].add(j);
+                columns[i][j - lowerBound] = j;
             }
             //------------------SHUFFLE------------------//
-            Collections.shuffle(columns[i]);
+            shuffle2DArray(columns[i]);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -742,13 +738,26 @@ public class Bingo01 {
                 if (i == 2 && j == 2) {
                     playerCard[i][j] = -1;
                 } else {
-                    playerCard[i][j] = columns[j].remove(0);
+                    playerCard[i][j] = columns[j][i];
                 }
             }
         }
 
         return playerCard;
     }
+
+    // Shuffle the elements in an array
+    private static void shuffle2DArray(int[] array) {
+        int index, temp;
+        Random random = new Random();
+        for (int i = array.length - 1; i > 0; i--) {
+            index = random.nextInt(i + 1);
+            temp = array[index];
+            array[index] = array[i];
+            array[i] = temp;
+        }
+    }
+
 
     public static boolean findDuplicate(int[] arr){
         for (int i = 0; i < arr.length; i++){
