@@ -10,13 +10,16 @@ public class Bingo01 {
         Utils.clrscr();
 
         System.out.println();
-        System.out.println("      Welcome to Bingo Game!               ");
-        System.out.println("   Please select a game mode:              ");
+        System.out.println("░█░█░█▀▀░█░░░█▀▀░█▀█░█▄█░█▀▀░░░▀█▀░█▀█░░░█▀▄░▀█▀░█▀█░█▀▀░█▀█░░░█▀▀░█▀█░█▄█░█▀▀░█" + "\n" +//
+                           "░█▄█░█▀▀░█░░░█░░░█░█░█░█░█▀▀░░░░█░░█░█░░░█▀▄░░█░░█░█░█░█░█░█░░░█░█░█▀█░█░█░█▀▀░▀" + "\n" +//
+                           "░▀░▀░▀▀▀░▀▀▀░▀▀▀░▀▀▀░▀░▀░▀▀▀░░░░▀░░▀▀▀░░░▀▀░░▀▀▀░▀░▀░▀▀▀░▀▀▀░░░▀▀▀░▀░▀░▀░▀░▀▀▀░▀" + "\n" //                    
+        );
+        
         System.out.println("+---------------------------------+");
         System.out.println("| Enter 1 for Traditional Bingo   |");
         System.out.println("| Enter 2 for Modern Bingo        |");
         System.out.println("+---------------------------------+");
-
+        System.out.print("   Please select a game mode: ");
         String userChoice = scanner.nextLine();
 
         switch (userChoice) {
@@ -228,9 +231,9 @@ public class Bingo01 {
                 break;
             }
         }
-
+        String yellowColor = "\u001B[33m"; String resetColor = "\u001B[0m";
         System.out.println("╔════════════════════════╗");
-        System.out.println("║   END OF BINGO GAME    ║");
+        System.out.println("║   "+ yellowColor +"END OF BINGO GAME"+ resetColor +"    ║");
         System.out.println("╚════════════════════════╝");
 
 
@@ -485,8 +488,9 @@ public class Bingo01 {
             }
         }
 
+        String yellowColor = "\u001B[33m"; String resetColor = "\u001B[0m";
         System.out.println("╔════════════════════════╗");
-        System.out.println("║   END OF BINGO GAME    ║");
+        System.out.println("║   "+ yellowColor +"END OF BINGO GAME"+ resetColor +"    ║");
         System.out.println("╚════════════════════════╝");
     }
 
@@ -837,13 +841,16 @@ public class Bingo01 {
     public static void displayHasNumber(String playerName, int number){
          // CALCULATE BORDER TOP
 
+         // COLOR
+        String greenColor = "\u001B[32m"; 
+        String resetColor = "\u001B[0m";
         System.out.print("+");
         for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 18; i++){
             System.out.print("-");
         }
         System.out.println("+");  
         
-        System.out.println("| "+ playerName  + " has the number " + number + " |" );
+        System.out.println("| "+ greenColor + playerName  + " has the number " + number + resetColor + " |" );
 
         // CALCULATE BORDER BOTTOM 
         System.out.print("+");
@@ -856,13 +863,16 @@ public class Bingo01 {
     }
 
     public static void displayHasNotNumber(String playerName, int number){
+        // COLOR
+        String redColor = "\u001B[31m";
+        String resetColor = "\u001B[0m";
         System.out.print("+");
         for(int i = 0; i < playerName.length() + String.valueOf(number).length() + 25; i++){
             System.out.print("-");
         }
         System.out.println("+"); 
 
-        System.out.println("| "+ playerName  + " don't have the number " + number + " |" );
+        System.out.println("| "+ redColor + playerName  + " don't have the number " + number + resetColor + " |" );
 
         System.out.print("+");
 
@@ -900,8 +910,10 @@ public class Bingo01 {
     }
 
     public static void displayLostInterface(){
+        String redColor = "\u001B[31m";
+        String resetColor = "\u001B[0m";
         System.out.println("╔════════════════════════════════╗");
-        System.out.println("║   PLAYERS WHO LOST THE GAME:   ║");
+        System.out.println("║  "+ redColor +" PLAYERS WHO LOST THE GAME: "+ resetColor+"  ║");
         System.out.println("╚════════════════════════════════╝");
     }
 
@@ -1079,7 +1091,7 @@ class Utils{
 
     public static void cont(){
         Scanner scan = new Scanner(System.in);
-        System.out.println("Press Enter to Continue");
+        System.out.print("\nPress Enter to Continue: ");
         scan.nextLine();
         Utils.clrscr();
     }
